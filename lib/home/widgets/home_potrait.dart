@@ -27,6 +27,7 @@ class HomePotrait extends StatelessWidget {
         height: size.height * 2,
         width: size.width,
         child: Stack(
+          alignment: Alignment.topCenter,
           children: [
             Image.asset(
               'assets/images/$image',

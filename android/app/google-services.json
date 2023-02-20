@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "552007137630",
+    "project_id": "magical-invitation",
+    "storage_bucket": "magical-invitation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552007137630:android:58e5a39c956adaf8b477cf",
+        "android_client_info": {
+          "package_name": "com.nevertell.magical_invitation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552007137630-uua87bqd71qfsu4n71tl12gr30c0vn7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQWXZBx07FgFob-h9hlsyVSjdY7fzi7zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552007137630-uua87bqd71qfsu4n71tl12gr30c0vn7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
