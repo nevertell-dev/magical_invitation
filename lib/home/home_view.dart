@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
                   HomeQuote(
                     adapter: state.quoteAdapter,
                     text:
-                        'Lovers don\'t finally meet somewhere.\nThey\'re in each other all along.\n—Rumi',
+                        '"Lovers don\'t finally meet somewhere.\nThey\'re in each other all along.\n—Rumi"',
                   ),
                   HomePotrait(
                     adapter: state.brideAdapter,

@@ -34,33 +34,30 @@ class HomePotrait extends StatelessWidget {
               alignment: Alignment.topCenter,
               fit: BoxFit.fitWidth,
             ),
-            SizedBox(
-              width: size.width,
-              child: Column(
-                children: [
-                  Text(title,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      style: const TextStyle(
-                        height: 0.8,
-                        fontSize: 64,
-                        fontFamily: 'PlayfairDisplay',
-                        fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F133A),
-                      )),
-                  const SizedBox(height: 16.0),
-                  Text(caption,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      style: const TextStyle(
-                        height: 0.8,
-                        fontSize: 24,
-                        fontFamily: 'GreatVibes',
-                        fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F133A),
-                      )),
-                ],
-              ),
+            Column(
+              children: [
+                Text(title,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      height: 0.8,
+                      fontSize: 64,
+                      fontFamily: 'PlayfairDisplay',
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF0F133A),
+                    )),
+                const SizedBox(height: 16.0),
+                Text(caption,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      height: 0.8,
+                      fontSize: 24,
+                      fontFamily: 'GreatVibes',
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF0F133A),
+                    )),
+              ],
             ).animate(adapter: _textAdapter).moveY(begin: 500, end: 250),
           ],
         )
