@@ -54,13 +54,13 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   HomePotrait(
                     adapter: state.brideAdapter,
-                    image: 'bride_potrait.png',
+                    image: 'bride-potrait.png',
                     title: 'The Bride',
                     caption: 'The Daughter of Her Father and Her Mother',
                   ),
                   HomePotrait(
                     adapter: state.groomAdapter,
-                    image: 'groom_potrait.png',
+                    image: 'groom-potrait.png',
                     title: 'The Groom',
                     caption: 'The Son of His Father and His Mother',
                   )
