@@ -4,12 +4,15 @@ import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magical_invitation/greeting/greeting_view.dart';
 import 'package:magical_invitation/home/home_view.dart';
 
 import 'firebase_options.dart';
 import 'home/bloc/home_bloc.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
       scrollBehavior: CustomScrollBehavior(),
       home: BlocProvider(
         create: (context) => HomeBloc(),
-        child: const HomeView(),
+        child: GreetingView(),
       ),
     );
   }

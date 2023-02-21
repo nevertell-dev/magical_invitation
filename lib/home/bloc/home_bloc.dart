@@ -12,28 +12,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeStarted>((event, emit) {
       final maxExtent = event.controller.position.maxScrollExtent;
       emit(HomeLoaded(
-        controller: event.controller,
-        maxExtent: event.controller.position.maxScrollExtent,
-        quoteAdapter: ScrollAdapter(
-          event.controller,
-          end: maxExtent * 0.2,
-        ),
-        brideAdapter: ScrollAdapter(
-          event.controller,
-          end: maxExtent * 0.3,
-        ),
-        groomAdapter: ScrollAdapter(
-          event.controller,
-          begin: maxExtent * 0.15,
-          end: maxExtent * 0.45,
-        ),
-      ));
+          scrollController: event.controller,
+          maxExtent: maxExtent,
+          adapters: [
+            ScrollAdapter(
+              event.controller,
+              end: maxExtent * 0.2,
+            ),
+            ScrollAdapter(
+              event.controller,
+              end: maxExtent * 0.3,
+            ),
+            ScrollAdapter(
+              event.controller,
+              begin: maxExtent * 0.15,
+              end: maxExtent * 0.45,
+            ),
+          ]));
     });
-  }
-
-  @override
-  Future<void> close() {
-    // scrollController.dispose();
-    return super.close();
   }
 }

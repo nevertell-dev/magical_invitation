@@ -11,41 +11,28 @@ abstract class HomeState extends Equatable {
 class HomeInitial extends HomeState {}
 
 class HomeLoaded extends HomeState {
-  final ScrollController controller;
+  final ScrollController scrollController;
   final double maxExtent;
-  final ScrollAdapter quoteAdapter;
-  final ScrollAdapter brideAdapter;
-  final ScrollAdapter groomAdapter;
+  final List<ScrollAdapter> adapters;
 
   const HomeLoaded({
-    required this.controller,
+    required this.scrollController,
     required this.maxExtent,
-    required this.quoteAdapter,
-    required this.brideAdapter,
-    required this.groomAdapter,
+    required this.adapters,
   });
 
   @override
-  List<Object> get props => [
-        maxExtent,
-        quoteAdapter,
-        brideAdapter,
-        groomAdapter,
-      ];
+  List<Object> get props => [scrollController, maxExtent, adapters];
 
   HomeLoaded copyWith({
-    ScrollController? controller,
+    ScrollController? scrollController,
     double? maxExtent,
-    ScrollAdapter? quoteAdapter,
-    ScrollAdapter? brideAdapter,
-    ScrollAdapter? groomAdapter,
+    List<ScrollAdapter>? adapters,
   }) {
     return HomeLoaded(
-      controller: controller ?? this.controller,
+      scrollController: scrollController ?? this.scrollController,
       maxExtent: maxExtent ?? this.maxExtent,
-      quoteAdapter: quoteAdapter ?? this.quoteAdapter,
-      brideAdapter: brideAdapter ?? this.brideAdapter,
-      groomAdapter: groomAdapter ?? this.groomAdapter,
+      adapters: adapters ?? this.adapters,
     );
   }
 }
