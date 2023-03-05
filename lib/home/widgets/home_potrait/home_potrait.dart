@@ -8,12 +8,15 @@ class HomePotrait extends StatelessWidget {
     required this.image,
     required this.title,
     required this.caption,
+    required this.modifier,
   }) : super(key: key);
 
   final ScrollAdapter adapter;
   final String image;
   final String title;
   final String caption;
+
+  final int modifier;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class HomePotrait extends StatelessWidget {
                         style: const TextStyle(
                           height: 0.8,
                           fontSize: 24,
-                          fontFamily: 'GreatVibes',
+                          fontFamily: 'Caveat',
                           fontWeight: FontWeight.w800,
                           color: Color(0xFF0F133A),
                         )),
@@ -71,7 +74,10 @@ class HomePotrait extends StatelessWidget {
               ],
             )
                 .animate(adapter: state.imageAdapter)
-                .moveY(begin: size.height, end: -size.height);
+                .moveY(begin: size.height, end: -size.height * 0)
+                .then()
+                .scale(end: const Offset(0.3, 0.3))
+                .fadeOut();
           }
           return const SizedBox();
         },

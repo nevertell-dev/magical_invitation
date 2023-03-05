@@ -30,11 +30,12 @@ environment:
 dependencies:
   bloc: ^8.1.1
   cupertino_icons: ^1.0.2
+  defer_pointer: ^0.0.2
   equatable: ^2.0.5
   firebase_core: ^2.6.1
   flutter:
     sdk: flutter
-  flutter_animate: ^4.0.0
+  flutter_animate: ^4.1.0
   flutter_bloc: ^8.1.2
 
 dev_dependencies:
@@ -84,6 +85,16 @@ flutter:
           weight: 800
         - asset: assets/fonts/PlayfairDisplay-Black.ttf
           weight: 900
+    - family: Caveat
+      fonts:
+        - asset: assets/fonts/Caveat-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Caveat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Caveat-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Caveat-Bold.ttf
+          weight: 700
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
