@@ -73,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
                   Scroller(
                     controller: _controller,
                     height: 5,
-                    children: (controller) => [],
+                    children: (context, controller) => [],
                   ),
                 ],
               ),

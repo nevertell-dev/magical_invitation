@@ -78,10 +78,7 @@ class MailBack extends Mail {
                               image: state.vignette, fit: BoxFit.fitHeight)),
                       // Image(image: stamp, fit: BoxFit.fitHeight),
                       Positioned.fill(
-                        child: Image(
-                                image: state.flower,
-                                fit: BoxFit.fitHeight,
-                                height: size.dy * 0.8)
+                        child: Image(image: state.flower, height: size.dy * 0.8)
                             .animate()
                             .scaleXY(begin: 0.6, end: 0.6),
                       ),
@@ -89,8 +86,12 @@ class MailBack extends Mail {
                   ),
                 )
                     .animate(adapter: mailAdapter)
+                    .scaleXY(begin: 0.5)
+                    .moveY(begin: 50)
+                    .then()
                     .rotate(end: -0.25)
                     .flipH(begin: 0, end: 0.5, perspective: 0.3)
+                    .scaleXY(end: 0.7)
                     .swap(
                       builder: (_, __) => MailFront(
                         controller: controller,
@@ -133,16 +134,17 @@ class MailFront extends Mail {
             alignment: Alignment.center,
             clipBehavior: Clip.none,
             children: [
-          Image(image: state.baseFront),
+          Image(
+            image: state.baseFront,
+            fit: BoxFit.fitHeight,
+          ),
           Positioned.fill(
             top: 150,
-            child: AbsorbPointer(
-              child: Letter(
-                controller: controller,
-                begin: end,
-                size: const Offset(300, 200),
-                maxScrollExtent: maxScrollExtent,
-              ),
+            child: Letter(
+              controller: controller,
+              begin: end,
+              size: const Offset(300, 200),
+              maxScrollExtent: maxScrollExtent,
             ),
           ),
           Image(image: state.body),
@@ -222,17 +224,17 @@ class MailLetter extends Mail {
 }
 
 class MailRect extends CustomClipper<Rect> {
-  MailRect(this.maxSize);
+  MailRect(this.rectSize);
 
-  final Offset maxSize;
+  final Offset rectSize;
 
   @override
   Rect getClip(Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     return Rect.fromCenter(
       center: center,
-      width: maxSize.dx,
-      height: maxSize.dy,
+      width: rectSize.dx,
+      height: rectSize.dy,
     );
   }
 

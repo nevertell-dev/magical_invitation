@@ -3,8 +3,10 @@ import 'package:defer_pointer/defer_pointer.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
 
-typedef ScrollerBuilder = List<Widget> Function(ScrollController controller);
+typedef ScrollerBuilder = List<Widget> Function(
+    BuildContext context, ScrollController controller);
 
 class Scroller extends StatelessWidget {
   const Scroller({
@@ -30,7 +32,8 @@ class Scroller extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                if (state is ScrollerLoaded) ...children.call(controller),
+                if (state is ScrollerLoaded)
+                  ...children.call(context, controller),
                 SingleChildScrollView(
                   controller: controller,
                   child: Container(height: baseHeight + height),
@@ -47,8 +50,13 @@ class Scroller extends StatelessWidget {
 class ScrollerCubit extends Cubit<ScrollerState> {
   ScrollerCubit() : super(ScrollerInitial());
 
-  void init() {
+  final player = AudioPlayer();
+
+  void init() async {
+    await player.setAsset('assets/audio/audio.mp3');
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      player.play();
       emit(ScrollerLoaded());
     });
   }
