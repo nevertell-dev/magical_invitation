@@ -6,29 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:magical_invitation/utils/controller_helper.dart';
 import 'package:magical_invitation/widgets/letter.dart';
+import 'package:magical_invitation/widgets/timeline_widget.dart';
 
-abstract class Mail extends StatelessWidget {
-  const Mail({
-    Key? key,
-    required this.controller,
-    this.begin,
-    this.maxScrollExtent,
-    this.margin = const Offset(100, 100),
-  }) : super(key: key);
-
-  final ScrollController controller;
-  final double? begin;
-  final double? maxScrollExtent;
-  final Offset margin;
-}
-
-class MailBack extends Mail {
-  const MailBack({
+class MailBack extends TimelineWidget {
+  const MailBack(
+    super.controller, {
     super.key,
-    required super.controller,
-    super.begin,
-    super.maxScrollExtent,
-    super.margin,
+    super.minExtent,
+    super.maxExtent,
   });
 
   @override
@@ -36,9 +21,9 @@ class MailBack extends Mail {
     const size = Offset(360, 480);
 
     // adapters
-    final end = maxScrollExtent.at(0.2);
-    final imageAdapter = ScrollAdapter(controller, begin: begin, end: end);
-    final mailAdapter = ScrollAdapter(controller, begin: begin, end: end);
+    final end = maxExtent.at(0.2);
+    final imageAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
+    final mailAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
 
     return BlocProvider(
       create: (_) => MailCubit()..init(context),
@@ -94,15 +79,14 @@ class MailBack extends Mail {
                     .scaleXY(end: 0.7)
                     .swap(
                       builder: (_, __) => MailFront(
-                        controller: controller,
+                        controller,
                         state: state,
-                        margin: margin,
-                        begin: end,
-                        maxScrollExtent: maxScrollExtent,
+                        minExtent: end,
+                        maxExtent: maxExtent,
                       ),
                     ),
               ),
-            );
+            ).animate(delay: 1.seconds).fadeIn(duration: 1.seconds);
           }
           return const SizedBox();
         },
@@ -111,14 +95,13 @@ class MailBack extends Mail {
   }
 }
 
-class MailFront extends Mail {
-  const MailFront({
+class MailFront extends TimelineWidget {
+  const MailFront(
+    super.controller, {
     super.key,
-    required super.controller,
     required this.state,
-    super.begin,
-    super.maxScrollExtent,
-    super.margin,
+    super.minExtent,
+    super.maxExtent,
   });
 
   final MailLoaded state;
@@ -126,9 +109,9 @@ class MailFront extends Mail {
   @override
   Widget build(BuildContext context) {
     // adapters
-    final end = maxScrollExtent.at(0.4);
-    final headAdapter = ScrollAdapter(controller, begin: begin, end: end);
-    final mailAdapter = ScrollAdapter(controller, begin: begin, end: end);
+    final end = maxExtent.at(0.6);
+    final headAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
+    final mailAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
 
     return Stack(
             alignment: Alignment.center,
@@ -138,14 +121,10 @@ class MailFront extends Mail {
             image: state.baseFront,
             fit: BoxFit.fitHeight,
           ),
-          Positioned.fill(
-            top: 150,
-            child: Letter(
-              controller: controller,
-              begin: end,
-              size: const Offset(300, 200),
-              maxScrollExtent: maxScrollExtent,
-            ),
+          Positioned(
+            height: 200,
+            width: 300,
+            child: Container(color: const Color.fromARGB(255, 255, 255, 255)),
           ),
           Image(image: state.body),
           Image(image: state.head)
@@ -156,24 +135,22 @@ class MailFront extends Mail {
         .flipH(begin: -0.5, perspective: 0.2)
         .swap(
           builder: (context, child) => MailLetter(
-            controller: controller,
+            controller,
             state: state,
-            margin: margin,
-            begin: end,
-            maxScrollExtent: maxScrollExtent,
+            minExtent: end,
+            maxExtent: maxExtent,
           ),
         );
   }
 }
 
-class MailLetter extends Mail {
-  const MailLetter({
+class MailLetter extends TimelineWidget {
+  const MailLetter(
+    super.controller, {
     super.key,
-    required super.controller,
     required this.state,
-    super.begin,
-    super.maxScrollExtent,
-    super.margin,
+    super.minExtent,
+    super.maxExtent,
   });
 
   final MailLoaded state;
@@ -181,10 +158,10 @@ class MailLetter extends Mail {
   @override
   Widget build(BuildContext context) {
     // adapters
-    final end = maxScrollExtent.at(0.6);
-    final letterAdapter = ScrollAdapter(controller, begin: begin, end: end);
-    final bodyAdapter = ScrollAdapter(controller, begin: begin, end: end);
-    final mailAdapter = ScrollAdapter(controller, begin: begin, end: end);
+    final end = maxExtent.at(0.8);
+    final letterAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
+    final bodyAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
+    final mailAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
 
     return Stack(
         alignment: Alignment.center,
@@ -202,17 +179,16 @@ class MailLetter extends Mail {
           ).animate(adapter: mailAdapter).moveY(end: 200).then().fadeOut(),
           Positioned(
             height: 200 * 3,
-            top: 150,
             child: Letter(
-              controller: controller,
-              begin: end,
+              controller,
+              minExtent: end,
+              maxExtent: maxExtent,
               size: const Offset(300, 200),
-              maxScrollExtent: maxScrollExtent,
             )
                 .animate(adapter: letterAdapter)
                 .moveY(end: -200)
                 .then()
-                .scaleXY(end: 1.2),
+                .scaleXY(end: 1),
           ),
           Image(image: state.body)
               .animate(adapter: bodyAdapter)
