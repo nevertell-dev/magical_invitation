@@ -21,7 +21,6 @@ class BackgroundTable extends TimelineWidget {
         const Positioned(
           width: 350,
           height: 350,
-          left: 30,
           top: 80,
           child: Vinyl(),
         ),
@@ -29,6 +28,7 @@ class BackgroundTable extends TimelineWidget {
     )
         .animate(delay: 1.seconds)
         .fadeIn(duration: 1.seconds)
+        .scaleXY(duration: 1.seconds, begin: 0.9)
         .animate(adapter: ScrollAdapter(controller, end: maxExtent.at(0.2)))
         .scaleXY(end: 0.9)
         .animate(

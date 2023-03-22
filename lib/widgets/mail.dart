@@ -21,7 +21,7 @@ class MailBack extends TimelineWidget {
     const size = Offset(360, 480);
 
     // adapters
-    final end = maxExtent.at(0.2);
+    final end = maxExtent.at(0.25);
     final imageAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
     final mailAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
 
@@ -34,40 +34,46 @@ class MailBack extends TimelineWidget {
               child: SizedBox(
                 width: size.dx,
                 height: size.dy,
-                child: ClipRect(
+                child: ClipRRect(
                   clipper: MailRect(size),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned.fill(
-                        child:
-                            Image(image: state.baseBack, fit: BoxFit.fitHeight)
-                                .animate(adapter: imageAdapter),
-                      ),
-                      Positioned.fill(
-                        child: Image(image: state.stars, fit: BoxFit.fitHeight)
-                            .animate(
-                                onPlay: (controller) => controller.repeat())
-                            .rotate(duration: 80000.ms, end: 1),
-                      ),
-                      Positioned.fill(
-                        child: Image(image: state.stars, fit: BoxFit.fitHeight)
-                            .animate(
-                                onPlay: (controller) => controller.repeat())
-                            .scaleXY(begin: 0.8, end: 0.8)
-                            .rotate(duration: 160000.ms, begin: -0.5, end: 0.5),
-                      ),
-                      Positioned.fill(
+                  child: RepaintBoundary(
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.center,
+                      children: [
+                        Positioned.fill(
                           child: Image(
-                              image: state.vignette, fit: BoxFit.fitHeight)),
-                      // Image(image: stamp, fit: BoxFit.fitHeight),
-                      Positioned.fill(
-                        child: Image(image: state.flower, height: size.dy * 0.8)
-                            .animate()
-                            .scaleXY(begin: 0.6, end: 0.6),
-                      ),
-                    ],
+                                  image: state.baseBack, fit: BoxFit.fitHeight)
+                              .animate(adapter: imageAdapter),
+                        ),
+                        Positioned.fill(
+                          child: Image(
+                                  image: state.stars, fit: BoxFit.fitHeight)
+                              .animate(
+                                  onPlay: (controller) => controller.repeat())
+                              .rotate(duration: 80000.ms, end: 1),
+                        ),
+                        Positioned.fill(
+                          child: Image(
+                                  image: state.stars, fit: BoxFit.fitHeight)
+                              .animate(
+                                  onPlay: (controller) => controller.repeat())
+                              .scaleXY(begin: 0.8, end: 0.8)
+                              .rotate(
+                                  duration: 160000.ms, begin: -0.5, end: 0.5),
+                        ),
+                        Positioned.fill(
+                            child: Image(
+                                image: state.vignette, fit: BoxFit.fitHeight)),
+                        // Image(image: stamp, fit: BoxFit.fitHeight),
+                        Positioned.fill(
+                          child:
+                              Image(image: state.flower, height: size.dy * 0.8)
+                                  .animate()
+                                  .scaleXY(begin: 0.6, end: 0.6),
+                        ),
+                      ],
+                    ),
                   ),
                 )
                     .animate(adapter: mailAdapter)
@@ -109,7 +115,7 @@ class MailFront extends TimelineWidget {
   @override
   Widget build(BuildContext context) {
     // adapters
-    final end = maxExtent.at(0.6);
+    final end = maxExtent.at(0.5);
     final headAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
     final mailAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
 
@@ -158,7 +164,7 @@ class MailLetter extends TimelineWidget {
   @override
   Widget build(BuildContext context) {
     // adapters
-    final end = maxExtent.at(0.8);
+    final end = maxExtent.at(0.75);
     final letterAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
     final bodyAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
     final mailAdapter = ScrollAdapter(controller, begin: minExtent, end: end);
@@ -176,12 +182,17 @@ class MailLetter extends TimelineWidget {
                   .animate()
                   .flipV(alignment: Alignment.topCenter, begin: -1, end: -1),
             ],
-          ).animate(adapter: mailAdapter).moveY(end: 200).then().fadeOut(),
+          )
+              .animate(adapter: mailAdapter)
+              .moveY(end: 100)
+              .then()
+              .moveY(end: 100)
+              .fadeOut(),
           Positioned(
             height: 200 * 3,
             child: Letter(
               controller,
-              minExtent: end,
+              minExtent: end.at(0.8),
               maxExtent: maxExtent,
               size: const Offset(300, 200),
             )
@@ -192,54 +203,55 @@ class MailLetter extends TimelineWidget {
           ),
           Image(image: state.body)
               .animate(adapter: bodyAdapter)
-              .moveY(end: 200)
+              .moveY(end: 100)
               .then()
+              .moveY(end: 100)
               .fadeOut(),
         ]);
   }
 }
 
-class MailRect extends CustomClipper<Rect> {
+class MailRect extends CustomClipper<RRect> {
   MailRect(this.rectSize);
 
   final Offset rectSize;
 
   @override
-  Rect getClip(Size size) {
+  RRect getClip(Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    return Rect.fromCenter(
+    final rect = Rect.fromCenter(
       center: center,
       width: rectSize.dx,
       height: rectSize.dy,
     );
+
+    return RRect.fromRectAndRadius(rect, const Radius.circular(10));
   }
 
   @override
-  bool shouldReclip(covariant CustomClipper<Rect> oldClipper) => false;
+  bool shouldReclip(covariant CustomClipper<RRect> oldClipper) => false;
 }
 
 class MailCubit extends Cubit<MailState> {
   MailCubit() : super(MailInitial());
 
-  // IMAGES
-  static const assetPath = 'assets/images';
-  // mail back images
-  final baseBack = const AssetImage('$assetPath/mail_b_base.png');
-  final stars = const AssetImage('$assetPath/mail_b_stars.png');
-  final vignette = const AssetImage('$assetPath/mail_b_vignette.png');
-  final stamp = const AssetImage('$assetPath/mail_b_stamp.png');
-  final flower = const AssetImage('$assetPath/mail_b_flower.png');
-  // mail front images
-  final baseFront = const AssetImage('$assetPath/mail_f_base.png');
-  final body = const AssetImage('$assetPath/mail_f_body.png');
-  final head = const AssetImage('$assetPath/mail_f_head.png');
-
   init(BuildContext context) {
+    // IMAGES
+    const assetPath = 'assets/images';
+    const baseBack = AssetImage('$assetPath/mail_b_base.png');
+    const stars = AssetImage('$assetPath/mail_b_stars.png');
+    const vignette = AssetImage('$assetPath/mail_b_vignette.png');
+    const stamp = AssetImage('$assetPath/mail_b_stamp.png');
+    const flower = AssetImage('$assetPath/mail_b_flower.png');
+    const baseFront = AssetImage('$assetPath/mail_f_base.png');
+    const body = AssetImage('$assetPath/mail_f_body.png');
+    const head = AssetImage('$assetPath/mail_f_head.png');
+
     precacheImage(baseFront, context);
     precacheImage(body, context);
     precacheImage(head, context);
 
-    emit(MailLoaded(
+    emit(const MailLoaded(
       baseBack: baseBack,
       stars: stars,
       vignette: vignette,

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:magical_invitation/utils/const.dart';
 
 import 'package:magical_invitation/widgets/timeline_widget.dart';
 
@@ -51,11 +52,7 @@ class Potrait extends TimelineWidget {
             Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontFamily: 'Caveat',
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
-              ),
+              style: caveatStyle,
             ),
           ],
         )

@@ -9,9 +9,11 @@ class Vinyl extends StatelessWidget {
     return Stack(
       children: [
         Image.asset('assets/images/vinyl_base.png'),
-        Image.asset('assets/images/vinyl_disc.png')
-            .animate(onPlay: (controller) => controller.repeat())
-            .rotate(end: 1, duration: 10.seconds),
+        RepaintBoundary(
+          child: Image.asset('assets/images/vinyl_disc.png')
+              .animate(onPlay: (controller) => controller.repeat())
+              .rotate(end: 1, duration: 10.seconds),
+        ),
         Image.asset('assets/images/vinyl_pipe.png'),
       ],
     );
