@@ -2,4 +2,4 @@
 
 Interactive Web Invitation.
 
-Try it here: https://magical-invitation.web.app
+Try the web version here: https://magical-invitation.web.app
