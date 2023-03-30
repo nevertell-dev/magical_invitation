@@ -24,35 +24,43 @@ class Timeline extends StatelessWidget {
   final double height;
   final TimelineBuilder children;
 
+  _body(BuildContext context, TimelineState state, Size size) =>
+      DeferredPointerHandler(
+        child: SizedBox(
+          height: size.height,
+          width: size.width,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ...(state is TimelineLoaded
+                  ? children.call(context, controller)
+                  : [DeferPointer(child: TimelineLoadingWidget(state))]),
+              SingleChildScrollView(
+                physics: state is TimelineLoaded
+                    ? const AlwaysScrollableScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
+                controller: controller,
+                child: Container(height: size.height + height),
+              ),
+            ],
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
-    final baseHeight = MediaQuery.of(context).size.height;
-
     return BlocProvider(
       create: (context) => TimelineCubit(),
       child: BlocBuilder<TimelineCubit, TimelineState>(
         builder: (context, state) {
-          return DeferredPointerHandler(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  ...(state is TimelineLoaded
-                      ? children.call(context, controller)
-                      : [DeferPointer(child: TimelineLoadingWidget(state))]),
-                  SingleChildScrollView(
-                    physics: state is TimelineLoaded
-                        ? const AlwaysScrollableScrollPhysics()
-                        : const NeverScrollableScrollPhysics(),
-                    controller: controller,
-                    child: Container(height: baseHeight + height),
+          final size = MediaQuery.of(context).size;
+          return size.width < 600
+              ? _body(context, state, size)
+              : const Center(
+                  child: Text(
+                    'Aplikasi ini dioptimalisasi untuk perangkat mobile dengan layar portrait\nJika ingin membukanya di desktop perkecil dulu windowsnya >>',
                   ),
-                ],
-              ),
-            ),
-          );
+                );
         },
       ),
     );

@@ -37,6 +37,115 @@ class MyApp extends StatelessWidget {
 
   final height = 12000.0;
 
+  _body(ScrollController controller, Size size, double maxExtent) => [
+        Positioned(
+          width: size.width + 200,
+          child: BackgroundTable(
+            controller,
+            maxExtent: maxExtent.at(0.2),
+          ),
+        ),
+        MailBack(controller, maxExtent: maxExtent.at(0.2)),
+        Positioned(
+          width: size.width,
+          right: 0,
+          child: BackgroundLight(
+            controller,
+            maxExtent: maxExtent.at(0.2),
+          ),
+        ),
+        Positioned(
+          width: size.width,
+          bottom: 0,
+          child: OverlayText(
+            controller,
+            play: true,
+            maxExtent: maxExtent.at(0.05),
+            text: 'Tarik layar ke keatas secara perlahan',
+          ),
+        ),
+        Potrait(
+          controller,
+          minExtent: maxExtent.at(0.19),
+          maxExtent: maxExtent.at(0.29),
+          image: 'potrait_bride',
+          name: 'The Bride',
+          subtitle: 'The daughter of her father and her mother',
+        ),
+        Potrait(
+          controller,
+          minExtent: maxExtent.at(0.23),
+          maxExtent: maxExtent.at(0.33),
+          image: 'potrait_groom',
+          name: 'The Groom',
+          subtitle: 'The son of his father and his mother',
+        ),
+        Positioned.fill(
+          child: DecoFrame(
+            controller,
+            minExtent: maxExtent.at(0.05),
+            maxExtent: maxExtent.at(0.5),
+          ),
+        ),
+        Positioned.fill(
+          child: Transform.scale(
+            scaleX: -1,
+            child: DecoFrame(
+              controller,
+              minExtent: maxExtent.at(0.05),
+              maxExtent: maxExtent.at(0.5),
+            ),
+          ),
+        ),
+        Clock(
+          controller,
+          minExtent: maxExtent.at(0.4),
+          maxExtent: maxExtent.at(0.6),
+        ),
+        const Text(
+          'Membentuk kenangan\nyang akan terus\nmengalir dalam waktu.',
+          textAlign: TextAlign.center,
+          style: caveatStyle,
+        )
+            .animate(
+              adapter: ScrollAdapter(
+                controller,
+                begin: maxExtent.at(0.4),
+                end: maxExtent.at(0.6),
+              ),
+            )
+            .fadeIn()
+            .then()
+            .fadeOut(),
+        Positioned(
+          width: size.width + 200,
+          height: size.height,
+          child: Story(
+            controller,
+            minExtent: maxExtent.at(0.27),
+            maxExtent: maxExtent.at(0.45),
+          ),
+        ),
+        Positioned(
+          width: size.width,
+          height: size.height,
+          child: DateAnnouncement(
+            controller,
+            minExtent: maxExtent.at(0.5),
+            maxExtent: maxExtent.at(0.7),
+          ),
+        ),
+        Positioned(
+          width: size.width,
+          height: size.height,
+          child: EndScreen(
+            controller,
+            minExtent: maxExtent.at(0.7),
+            maxExtent: maxExtent,
+          ),
+        ),
+      ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -57,114 +166,15 @@ class MyApp extends StatelessWidget {
                         ? controller.position.maxScrollExtent
                         : height;
                     final size = MediaQuery.of(context).size;
-                    return [
-                      Positioned(
-                        width: size.width + 200,
-                        child: BackgroundTable(
-                          controller,
-                          maxExtent: maxExtent.at(0.2),
-                        ),
-                      ),
-                      MailBack(controller, maxExtent: maxExtent.at(0.2)),
-                      Positioned(
-                        width: size.width,
-                        right: 0,
-                        child: BackgroundLight(
-                          controller,
-                          maxExtent: maxExtent.at(0.2),
-                        ),
-                      ),
-                      Positioned(
-                        width: size.width,
-                        bottom: 0,
-                        child: OverlayText(
-                          controller,
-                          play: true,
-                          maxExtent: maxExtent.at(0.05),
-                          text: 'Tarik layar ke keatas secara perlahan',
-                        ),
-                      ),
-                      Potrait(
-                        controller,
-                        minExtent: maxExtent.at(0.19),
-                        maxExtent: maxExtent.at(0.29),
-                        image: 'potrait_bride',
-                        name: 'The Bride',
-                        subtitle: 'The daughter of her father and her mother',
-                      ),
-                      Potrait(
-                        controller,
-                        minExtent: maxExtent.at(0.23),
-                        maxExtent: maxExtent.at(0.33),
-                        image: 'potrait_groom',
-                        name: 'The Groom',
-                        subtitle: 'The son of his father and his mother',
-                      ),
-                      Positioned.fill(
-                        child: DecoFrame(
-                          controller,
-                          minExtent: maxExtent.at(0.05),
-                          maxExtent: maxExtent.at(0.5),
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: Transform.scale(
-                          scaleX: -1,
-                          child: DecoFrame(
-                            controller,
-                            minExtent: maxExtent.at(0.05),
-                            maxExtent: maxExtent.at(0.5),
-                          ),
-                        ),
-                      ),
-                      Clock(
-                        controller,
-                        minExtent: maxExtent.at(0.4),
-                        maxExtent: maxExtent.at(0.6),
-                      ),
-                      const Text(
-                        'Membentuk kenangan\nyang akan terus\nmengalir dalam waktu.',
-                        textAlign: TextAlign.center,
-                        style: caveatStyle,
-                      )
-                          .animate(
-                            adapter: ScrollAdapter(
-                              controller,
-                              begin: maxExtent.at(0.4),
-                              end: maxExtent.at(0.6),
-                            ),
-                          )
-                          .fadeIn()
-                          .then()
-                          .fadeOut(),
-                      Positioned(
-                        width: size.width + 200,
-                        height: size.height,
-                        child: Story(
-                          controller,
-                          minExtent: maxExtent.at(0.27),
-                          maxExtent: maxExtent.at(0.45),
-                        ),
-                      ),
-                      Positioned(
-                        width: size.width,
-                        height: size.height,
-                        child: DateAnnouncement(
-                          controller,
-                          minExtent: maxExtent.at(0.5),
-                          maxExtent: maxExtent.at(0.7),
-                        ),
-                      ),
-                      Positioned(
-                        width: size.width,
-                        height: size.height,
-                        child: EndScreen(
-                          controller,
-                          minExtent: maxExtent.at(0.7),
-                          maxExtent: maxExtent,
-                        ),
-                      ),
-                    ];
+                    return size.width < 600
+                        ? _body(controller, size, maxExtent)
+                        : const [
+                            Center(
+                              child: Text(
+                                'Aplikasi ini dioptimalisasi untuk perangkat mobile dengan layar portrait\nJika ingin membukanya di desktop perkecil dulu windowsnya >>',
+                              ),
+                            )
+                          ];
                   }))),
     );
   }
