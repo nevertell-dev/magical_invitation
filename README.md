@@ -1,5 +1,5 @@
 # magical_invitation
 
-Interactive Web Invitation.
+Animated wedding Invitation
 
 Try the web version here: https://magical-invitation.web.app
